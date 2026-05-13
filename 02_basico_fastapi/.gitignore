@@ -1,6 +1,5 @@
 # pessoal
 executar.bat
-curso*/
 
 # Env
 .env
@@ -12,18 +11,10 @@ curso*/
 venv/
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.pyc
-*.egg
-*.egg-info/
-.eggs/
 .pytest_cache/
 .mypy_cache/
 .ipynb_checkpoints/
-
-dist/
-build/
+*.pyc
 
 # Logs / reports
 *.log

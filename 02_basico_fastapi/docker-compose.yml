@@ -1,0 +1,53 @@
+# Docker Compose file for MongoDB and Mongo Express e commands
+# 
+# docker run -d --name mongo-dev -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin123 -v mongo_data:/data/db mongo:7
+# docker ps -a
+# docker run mongo-dev
+# docker exec -it mongo-dev mongosh -u admin -p admin123 --authenticationDatabase admin
+# 
+# show dbs
+# use test
+# show collercitons
+#
+# db.test.insertOne({ name: "Test Document" })
+# db.test.find({})  
+# db.test.updateOne({ name: "Test Document" }, { $set: { name: "Updated Document" } })
+# db.test.deleteOne({ name: "Updated Document" })
+
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongo-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongo_data:/data/db
+
+  mongo-shell:
+    image: mongo:7
+    container_name: mongo-shell
+    depends_on:
+      - mongo
+    entrypoint: ["sleep", "infinity"]
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongo:27017/
+      ME_CONFIG_BASICAUTH: "false"
+
+volumes:
+  mongo_data:
