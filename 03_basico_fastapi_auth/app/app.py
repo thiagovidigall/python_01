@@ -18,8 +18,8 @@ app = FastAPI(
 @app.on_event("startup")
 async def app_init():
     # Inicializa o cliente MongoDB e o Beanie
-    client = AsyncMongoClient(settings.MONGO_CONNECTION_STRING)  # cria o cliente Mongo assíncrono
-    client_db = client.todoapp  # seleciona o banco "todoapp"
+    client_db = AsyncMongoClient(settings.MONGO_CONNECTION_STRING).todoapp  # cria o cliente Mongo assíncrono
+    # client_db = client[settings.MONGO_DATABASE_NAME]  # banco definido em settings (padrão "todo"; pode vir do .env depois)
     await init_beanie(
         database=client_db,
         document_models=[
@@ -31,5 +31,5 @@ async def hello():
     return {"message": "teste hello"}
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", port=8081, reload=True)

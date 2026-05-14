@@ -17,7 +17,8 @@ class Settings(BaseSettings):  # em TS seria como "extends BaseSettings": aqui �
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # expiração do token de refresh (7 dias)
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []  # origens permitidas para CORS
     # Configurações do banco de dados
-    MONGO_CONNECTION_STRING: str = config('MONGO_CONNECTION_STRING', cast=str)  # cast=str garante que a URI do banco seja tratada como string
+    MONGO_CONNECTION_STRING: str = config('MONGO_CONNECTION_STRING', cast=str)  # só host/porta/credenciais; o nome do banco fica em MONGO_DATABASE_NAME
+    MONGO_DATABASE_NAME: str = "todo"  # nome lógico do banco no Mongo; sobrescreva com env MONGO_DATABASE_NAME quando quiser
 
     class Config:  # classe interna (nested class): usada pelo Pydantic para configurar o comportamento desta classe Settings
         case_sensitive = True  # metaconfiguracao: nomes de variaveis de ambiente ficam sensiveis a maiusculas/minusculas
