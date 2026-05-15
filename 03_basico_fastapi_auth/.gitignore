@@ -1,5 +1,5 @@
-# Python
-.venv/
+# Python — ambiente virtual só dentro de app/
+app/.venv/
 __pycache__/
 *.py[cod]
 *.pyo

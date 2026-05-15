@@ -3,6 +3,8 @@ from core.config import settings  # `core.config` = pacote.arquivo (como `from c
 from beanie import init_beanie  # função para inicializar o Beanie com o MongoDB
 from pymongo import AsyncMongoClient  # cliente assíncrono oficial do PyMongo (compatível com Beanie 2.x)
 import uvicorn  # servidor ASGI para executar a aplicação FastAPI
+from models.user_model import User  # importa o modelo User
+
 
 
 # instancia aqui no app.py para garantir que as variáveis de ambiente sejam lidas e validadas antes de usar
@@ -23,13 +25,13 @@ async def app_init():
     await init_beanie(
         database=client_db,
         document_models=[
-
+            User
         ])  # aqui passamos os modelos de documento do Beanie, se tivéssemos algum definido
 
-@app.get('/')
-async def hello():
-    return {"message": "teste hello"}
+# @app.get('/')
+# async def hello():
+#     return {"message": "teste hello"}
 
 
 #if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=8081, reload=True)
+    # uvicorn.run("app:app", host="0.0.0.0", port=8081, reload=True)
