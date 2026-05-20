@@ -21,10 +21,10 @@ app = FastAPI(
 @app.on_event("startup")
 async def app_init():
     # Inicializa o cliente MongoDB e o Beanie
-    client_db = AsyncMongoClient(settings.MONGO_CONNECTION_STRING).todoapp  # cria o cliente Mongo assíncrono
-    # client_db = client[settings.MONGO_DATABASE_NAME]  # banco definido em settings (padrão "todo"; pode vir do .env depois)
+    client = AsyncMongoClient(settings.MONGO_CONNECTION_STRING)
+    database = client[settings.MONGO_DATABASE_NAME]
     await init_beanie(
-        database=client_db,
+        database=database,
         document_models=[
             User
         ])  # aqui passamos os modelos de documento do Beanie, se tivéssemos algum definido
